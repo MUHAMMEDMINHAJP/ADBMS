@@ -148,4 +148,4 @@ Query OK, 0 rows affected (0.21 sec)
 mysql> desc EMPLOYEE2;
 ERROR 1146 (42S02): Table 'DBMS.EMPLOYEE2' doesn't exist
 
-
+//VERIFIED
