@@ -1,0 +1,247 @@
+                                                         a) TCL COMMANDS
+                                                     ----------------------------
+
+
+
+1.    Commit
+
+
+mysql> SET AUTOCOMMIT=OFF;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> select * from PERSON;
++------+---------+----------------+------+-----------+
+| SSN  | name    | city           | dob  | adhar_no  |
++------+---------+----------------+------+-----------+
+|    1 | hari    | perinthalmanna | 1949 |   1234500 |
+|    2 | kichu   | perinthalmanna | 2000 |   4568109 |
+|    3 | vysh    | perithalmanna  | 2001 |   1237896 |
+|   10 | sreya   | thrissur       | 2001 | 122536246 |
+|   14 | nileena | kannur         | 1999 |  12255557 |
+|   13 | Minhaj  | Malappuram     | 1999 | 567329876 |
+|    5 | ashwin  | calicut        | 2000 |  56733245 |
++------+---------+----------------+------+-----------+
+7 rows in set (0.00 sec)
+
+mysql> insert into PERSON values(15,'vishnu','calicut',2001,223344556);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> commit;
+Query OK, 0 rows affected (0.04 sec)
+
+mysql> select * from PERSON;
++------+---------+----------------+------+-----------+
+| SSN  | name    | city           | dob  | adhar_no  |
++------+---------+----------------+------+-----------+
+|    1 | hari    | perinthalmanna | 1949 |   1234500 |
+|    2 | kichu   | perinthalmanna | 2000 |   4568109 |
+|    3 | vysh    | perithalmanna  | 2001 |   1237896 |
+|   10 | sreya   | thrissur       | 2001 | 122536246 |
+|   14 | nileena | kannur         | 1999 |  12255557 |
+|   13 | Minhaj  | Malappuram     | 1999 | 567329876 |
+|    5 | ashwin  | calicut        | 2000 |  56733245 |
+|   15 | vishnu  | calicut        | 2001 | 223344556 |
++------+---------+----------------+------+-----------+
+8 rows in set (0.00 sec)
+
+  
+
+------------------------------------------------------------------------------------------------------------------------------------------
+            
+ 2.    Rollback
+
+
+mysql> insert into PERSON values(18,'femi','thrissur',2001,222244441);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select * from PERSON;
++------+---------+----------------+------+-----------+
+| SSN  | name    | city           | dob  | adhar_no  |
++------+---------+----------------+------+-----------+
+|    1 | hari    | perinthalmanna | 1949 |   1234500 |
+|    2 | kichu   | perinthalmanna | 2000 |   4568109 |
+|    3 | vysh    | perithalmanna  | 2001 |   1237896 |
+|   10 | sreya   | thrissur       | 2001 | 122536246 |
+|   14 | nileena | kannur         | 1999 |  12255557 |
+|   13 | Minhaj  | Malappuram     | 1999 | 567329876 |
+|    5 | ashwin  | calicut        | 2000 |  56733245 |
+|   15 | vishnu  | calicut        | 2001 | 223344556 |
+|   18 | femi    | thrissur       | 2001 | 222244441 |
++------+---------+----------------+------+-----------+
+9 rows in set (0.00 sec)
+
+mysql> rollback;
+Query OK, 0 rows affected (0.06 sec)
+
+mysql> select * from PERSON;
++------+---------+----------------+------+-----------+
+| SSN  | name    | city           | dob  | adhar_no  |
++------+---------+----------------+------+-----------+
+|    1 | hari    | perinthalmanna | 1949 |   1234500 |
+|    2 | kichu   | perinthalmanna | 2000 |   4568109 |
+|    3 | vysh    | perithalmanna  | 2001 |   1237896 |
+|   10 | sreya   | thrissur       | 2001 | 122536246 |
+|   14 | nileena | kannur         | 1999 |  12255557 |
+|   13 | Minhaj  | Malappuram     | 1999 | 567329876 |
+|    5 | ashwin  | calicut        | 2000 |  56733245 |
+|   15 | vishnu  | calicut        | 2001 | 223344556 |
++------+---------+----------------+------+-----------+
+8 rows in set (0.00 sec)
+
+
+-------------------------------------------------------------------------------------------------------------------------------------------
+            
+ 3.    Savepoint
+
+
+insert into PERSON values(18,'femi','thrissur',2001,222244441);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> savepoint A;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> insert into PERSON values(19,'akshay','kollam',1994,222244321);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> savepoint B;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> insert into PERSON values(20,'nihal','alappuzha',1994,222244789);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> savepoint C;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> select * from PERSON;
++------+---------+----------------+------+-----------+
+| SSN  | name    | city           | dob  | adhar_no  |
++------+---------+----------------+------+-----------+
+|    1 | hari    | perinthalmanna | 1949 |   1234500 |
+|    2 | kichu   | perinthalmanna | 2000 |   4568109 |
+|    3 | vysh    | perithalmanna  | 2001 |   1237896 |
+|   10 | sreya   | thrissur       | 2001 | 122536246 |
+|   14 | nileena | kannur         | 1999 |  12255557 |
+|   13 | Minhaj  | Malappuram     | 1999 | 567329876 |
+|    5 | ashwin  | calicut        | 2000 |  56733245 |
+|   15 | vishnu  | calicut        | 2001 | 223344556 |
+|   18 | femi    | thrissur       | 2001 | 222244441 |
+|   19 | akshay  | kollam         | 1994 | 222244321 |
+|   20 | nihal   | alappuzha      | 1994 | 222244789 |
++------+---------+----------------+------+-----------+
+11 rows in set (0.00 sec)
+
+mysql> ROLLBACK to B;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> select * from PERSON;
++------+---------+----------------+------+-----------+
+| SSN  | name    | city           | dob  | adhar_no  |
++------+---------+----------------+------+-----------+
+|    1 | hari    | perinthalmanna | 1949 |   1234500 |
+|    2 | kichu   | perinthalmanna | 2000 |   4568109 |
+|    3 | vysh    | perithalmanna  | 2001 |   1237896 |
+|   10 | sreya   | thrissur       | 2001 | 122536246 |
+|   14 | nileena | kannur         | 1999 |  12255557 |
+|   13 | Minhaj  | Malappuram     | 1999 | 567329876 |
+|    5 | ashwin  | calicut        | 2000 |  56733245 |
+|   15 | vishnu  | calicut        | 2001 | 223344556 |
+|   18 | femi    | thrissur       | 2001 | 222244441 |
+|   19 | akshay  | kollam         | 1994 | 222244321 |
++------+---------+----------------+------+-----------+
+10 rows in set (0.00 sec)
+
+-------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+
+                                                         b) DCL COMMAND
+                                                     ----------------------
+
+
+
+   Create two users user1, user2
+
+
+ 1. GRANT
+        ->Give insert and select privilege to user 1 on customer table in the invoice database.
+
+
+         ->Give update and delete privilege to user 2 on all tables in the invoice database.
+
+
+
+mysql> create user 'USER1'@'localhost' identified by 'pass1';
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> create user 'USER2'@'localhost' identified by 'pass2';
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> select user from mysql.user;
++------------------+
+| user             |
++------------------+
+| USER1            |
+| USER2            |
+| abc              |
+| debian-sys-maint |
+| mysql.session    |
+| mysql.sys        |
+| root             |
+| user1            |
+| user2            |
+| userone          |
+| usertwo          |
+| xyz              |
++------------------+
+12 rows in set (0.00 sec)
+
+
+mysql> grant insert ,select on Customer to 'USER1'@'localhost';
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> show grants for 'USER1'@'localhost';
++---------------------------------------------------------------------+
+| Grants for USER1@localhost                                          |
++---------------------------------------------------------------------+
+| GRANT USAGE ON *.* TO 'USER1'@'localhost'                           |
+| GRANT SELECT, INSERT ON `INVOICE`.`Customer` TO 'USER1'@'localhost' |
++---------------------------------------------------------------------+
+2 rows in set (0.00 sec)
+
+
+
+mysql> grant delete,update on INVOICE. * to 'USER2'@'localhost';
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> show grants for 'USER2'@'localhost';
++------------------------------------------------------------+
+| Grants for USER2@localhost                                 |
++------------------------------------------------------------+
+| GRANT USAGE ON *.* TO 'USER2'@'localhost'                  |
+| GRANT UPDATE, DELETE ON `INVOICE`.* TO 'USER2'@'localhost' |
++------------------------------------------------------------+
+2 rows in set (0.00 sec)
+
+
+
+
+-----------------------------------------------------------------------------------------------------------------------------------------
+ 2.  REVOKE
+                   ->Remove delete privilege of user 2.
+
+
+
+mysql> revoke delete on INVOICE. * from 'USER2'@'localhost';
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> show grants for 'USER2'@'localhost';
++----------------------------------------------------+
+| Grants for USER2@localhost                         |
++----------------------------------------------------+
+| GRANT USAGE ON *.* TO 'USER2'@'localhost'          |
+| GRANT UPDATE ON `INVOICE`.* TO 'USER2'@'localhost' |
++----------------------------------------------------+
+2 rows in set (0.00 sec)
+
