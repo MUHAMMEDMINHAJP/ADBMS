@@ -1,0 +1,141 @@
+Experiment No - 1.7 Optimizing Database:(Group by,Aggregate Functions)
+          ----------------------------------------------
+
+
+
+1.List product name, price except onion on price order.
+
+
+mysql> select * from Product;
++-----+--------+-------+
+| pid | pname  | price |
++-----+--------+-------+
+|   1 | pen    |    10 |
+|   2 | book   |    51 |
+|   3 | pencil |     5 |
+|   4 | eraser |     3 |
+|   5 | scale  |     5 |
+|   6 | box    |    51 |
+|   7 | bag    |   663 |
++-----+--------+-------+
+7 rows in set (0.00 sec)
+
+
+
+mysql> select pname,price from Product where pname!='scale' order by price;
++--------+-------+
+| pname  | price |
++--------+-------+
+| eraser |     3 |
+| pencil |     5 |
+| pen    |    10 |
+| book   |    51 |
+| box    |    51 |
+| bag    |   663 |
++--------+-------+
+6 rows in set (0.00 sec)
+
+
+*********************************************************************************************************************************************************
+
+2.Find minimum, maximum and average price of products.
+
+mysql> select min(price),max(price),avg(price) from Product;
++------------+------------+------------+
+| min(price) | max(price) | avg(price) |
++------------+------------+------------+
+|          3 |        663 |   112.5714 |
++------------+------------+------------+
+1 row in set (0.00 sec)
+
+--------------------------------------------------------------------------------------------------------------
+
+3. Find number of customers in each city.
+
+
+mysql> select* from Customer;
++-----+---------+----------------+------------+-----------+
+| id  | name    | address        | city       | ph_no     |
++-----+---------+----------------+------------+-----------+
+| 100 | Maanas  | kalanthode     | mukkam     | 999275288 |
+| 101 | ashwin  | thamarssery    | calicut    |  99345672 |
+| 102 | hari    | mannarkad      | palakkad   | 987654322 |
+| 103 | hiba    | anakayam       | malappuram |  98456732 |
+| 104 | karthik | perinthalmanna | malappuram | 984534567 |
+| 105 | sreya   | kunnamkulam    | thrissur   | 984321567 |
+| 106 | minhaj  | edavanna       | manjeri    |      NULL |
+| 107 | nileena | irutty         | kannur     |      NULL |
++-----+---------+----------------+------------+-----------+
+8 rows in set (0.00 sec)
+
+
+mysql>  select city,count(id) from Customer group by city;
++------------+-----------+
+| city       | count(id) |
++------------+-----------+
+| calicut    |         1 |
+| kannur     |         1 |
+| malappuram |         2 |
+| manjeri    |         1 |
+| mukkam     |         1 |
+| palakkad   |         1 |
+| thrissur   |         1 |
++------------+-----------+
+7 rows in set (0.00 sec)
+
+---------------------------------------------------------------------------------------------------------------------------
+
+
+
+4.Find number of customers in each city, only include city with more than 2 customers.
+
+
+mysql> select * from Customer;
++-----+----------+----------------+------------+-----------+
+| id  | name     | address        | city       | ph_no     |
++-----+----------+----------------+------------+-----------+
+| 100 | Maanas   | kalanthode     | mukkam     | 999275288 |
+| 101 | ashwin   | thamarssery    | calicut    |  99345672 |
+| 102 | hari     | mannarkad      | palakkad   | 987654322 |
+| 103 | hiba     | anakayam       | malappuram |  98456732 |
+| 104 | karthik  | perinthalmanna | malappuram | 984534567 |
+| 105 | sreya    | kunnamkulam    | thrissur   | 984321567 |
+| 106 | minhaj   | edavanna       | manjeri    |      NULL |
+| 107 | nileena  | irutty         | kannur     |      NULL |
+| 108 | ashwathy | vadakara       | malappuram | 994321567 |
++-----+----------+----------------+------------+-----------+
+9 rows in set (0.00 sec)
+
+mysql> select count(*),city from Customer group by city having count(*)>2;
++----------+------------+
+| count(*) | city       |
++----------+------------+
+|        3 | malappuram |
++----------+------------+
+1 row in set (0.00 sec)
+
+
+---------------------------------------------------------------------------------------------------------------------------
+
+
+
+5.Show data as displayed ‘who, where’ Eg: ‘customer1 lives in Kochi’.
+
+
+mysql>  select concat(name, " Lives in ", city) as cust_info from Customer;
++------------------------------+
+| cust_info                    |
++------------------------------+
+| Maanas Lives in mukkam       |
+| ashwin Lives in calicut      |
+| hari Lives in palakkad       |
+| hiba Lives in malappuram     |
+| karthik Lives in malappuram  |
+| sreya Lives in thrissur      |
+| minhaj Lives in manjeri      |
+| nileena Lives in kannur      |
+| ashwathy Lives in malappuram |
++------------------------------+
+
+9 rows in set (0.00 sec)
+
