@@ -1,0 +1,108 @@
+
+
+EXPERIMENT NO: 2.1	- PL/SQL PROGRAMS- STORED PROCEDURES 
+          ----------------------------------------
+
+
+1.      Create a procedure to display all tables in the invoice database.
+
+
+mysql> create  procedure invoice() begin select * from Customer; select * from Product; select * from Invoice_item; select * from Invoice_master; end##
+Query OK, 0 rows affected (0.07 sec)
+
+mysql> call invoice();
+    -> ##
++-----+----------+----------------+------------+-----------+
+| id  | name     | address        | city       | ph_no     |
++-----+----------+----------------+------------+-----------+
+| 100 | Maanas   | kalanthode     | mukkam     | 999275288 |
+| 101 | ashwin   | thamarssery    | calicut    |  99345672 |
+| 102 | hari     | mannarkad      | palakkad   | 987654322 |
+| 103 | hiba     | anakayam       | malappuram |  98456732 |
+| 104 | karthik  | perinthalmanna | malappuram | 984534567 |
+| 105 | sreya    | kunnamkulam    | thrissur   | 984321567 |
+| 106 | minhaj   | edavanna       | manjeri    |      NULL |
+| 107 | nileena  | irutty         | kannur     |      NULL |
+| 108 | ashwathy | vadakara       | malappuram | 994321567 |
++-----+----------+----------------+------------+-----------+
+9 rows in set (0.01 sec)
+
++-----+--------+-------+
+| pid | pname  | price |
++-----+--------+-------+
+|   1 | pen    |    15 |
+|   2 | book   |    56 |
+|   3 | pencil |    10 |
+|   4 | eraser |     8 |
+|   5 | scale  |    10 |
+|   6 | box    |    56 |
+|   7 | bag    |   668 |
++-----+--------+-------+
+7 rows in set (0.01 sec)
+
++--------+------+----------+
+| inv_id | pid  | quantity |
++--------+------+----------+
+|   1010 |    5 |       35 |
+|   1008 |    7 |       40 |
+|   1015 |    3 |       45 |
+|   1010 |    2 |      100 |
++--------+------+----------+
+4 rows in set (0.01 sec)
+
++--------+---------+------------+
+| inv_id | cust_id | inv_date   |
++--------+---------+------------+
+|   1002 |     100 | 2023-03-22 |
+|   1003 |     100 | 2024-01-05 |
+|   1005 |     103 | 2023-09-29 |
+|   1008 |     100 | 2023-03-22 |
+|   1010 |     104 | 2023-04-18 |
+|   1015 |     105 | 2023-07-15 |
++--------+---------+------------+
+6 rows in set (0.01 sec)
+
+Query OK, 0 rows affected (0.01 sec)
+
+
+---------------------------------------------------------------------------------------------------------------------------
+
+
+2. Create a procedure to find greatest of 3 numbers.
+
+
+mysql> create procedure greates(a int,b int,c int) begin if(a>b)and(a>c)then select a as'greater';elseif(b>a)and(b>c)then select b as'greater'; else select c as'greater'; end if; end##
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> call greates(1,2,3);
+    -> ##
++---------+
+| greater |
++---------+
+|       3 |
++---------+
+1 row in set (0.00 sec)
+
+Query OK, 0 rows affected (0.00 sec)
+
+
+---------------------------------------------------------------------------------------------------------------------------
+
+3. Create a procedure to display invoice details of a particular customer.
+
+
+
+create procedure invdetail(a varchar(30)) begin select Customer.name,Invoice_master.*,Product.pname,Invoice_item.pid,Invoice_item.quantity from Invoice_item inner join Invoice_master on Invoice_master.inv_id=Invoice_item.inv_id inner join Product on Product.pid=Invoice_item.pid inner join Customer on Customer.id=Invoice_master.cust_id where Customer.name=a; end//
+Query OK, 0 rows affected (0.04 sec)
+
+
+call invdetail('karthik')
+    -> //
++---------+--------+---------+------------+-------+------+----------+
+| name    | inv_id | cust_id | inv_date   | pname | pid  | quantity |
++---------+--------+---------+------------+-------+------+----------+
+| karthik |   1010 |     104 | 2023-04-18 | scale |    5 |       35 |
+| karthik |   1010 |     104 | 2023-04-18 | book  |    2 |      100 |
++---------+--------+---------+------------+-------+------+----------+
+2 rows in set (0.00 sec)
+
