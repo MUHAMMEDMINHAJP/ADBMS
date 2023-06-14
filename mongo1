@@ -1,6 +1,6 @@
-                                        Assignment 3: NoSQL-CRUD
+                                         Assignment 3: NoSQL-CRUD
 
-                  ==================================
+                                    ==================================
 1.      Write a MongoDB query to create an INVOICE database and collections (CUSTOMER, PRODUCT) and its corresponding documents.
 
 > use invoice
