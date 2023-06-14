@@ -1,0 +1,77 @@
+                                        Assignment 3: NoSQL-CRUD
+
+                  ==================================
+1.      Write a MongoDB query to create an INVOICE database and collections (CUSTOMER, PRODUCT) and its corresponding documents.
+
+> use invoice
+switched to db invoice
+> db.createCollection("Customer")
+{ "ok" : 1 }
+> db.createCollection("Product")
+{ "ok" : 1 }
+> show collections
+Customer
+Product
+> db.Customer.insertMany([{cid:"100",name:"akshay", address:"kakkodi",city:"calicut",age:"53",ph_no:"9895000111"},{cid:"101",name:"vishnu", address:"kattippara",city:"calicut",age:"21",ph_no:"9947000111"},{Cid:"102",name:"sreya", address:"perumbilav",city:"thrissur",age:"21",ph_no:"9034000111"},{cid:"103",name:"minhaj", address:"manjeri",city:"malappuram",age:"24",ph_no:"7034275288"},{cid:"104",name:"nileena", address:"iritty",city:"kannur",age:"24",ph_no:"9995275288"}]) 
+{
+	"acknowledged" : true,
+	"insertedIds" : [
+		ObjectId("648179e587f83153b560d8c7"),
+		ObjectId("648179e587f83153b560d8c8"),
+		ObjectId("648179e587f83153b560d8c9"),
+		ObjectId("648179e587f83153b560d8ca"),
+		ObjectId("648179e587f83153b560d8cb")
+	]
+}
+
+> db.Product.insertMany([{Pid:"100",Pname:"Pen",Price:"5"},{Pid:"101",Pname:"Pencil",Price:"3"},{Pid:"102",Pname:"scale",Price:"5"},{Pid:"103",Pname:"book",Price:"50"},{Pid:"104",Pname:"box",Price:"60"}])
+{
+	"acknowledged" : true,
+	"insertedIds" : [
+		ObjectId("6489864c3681b0ebb5f10653"),
+		ObjectId("6489864c3681b0ebb5f10654"),
+		ObjectId("6489864c3681b0ebb5f10655"),
+		ObjectId("6489864c3681b0ebb5f10656"),
+		ObjectId("6489864c3681b0ebb5f10657")
+	]
+}
+
+
+--------------------------------------------------------------------------------------------------------------------------
+2.      Write a MongoDB query to find all documents from the collection CUSTOMER
+
+> db.Customer.find()
+{ "_id" : ObjectId("648179e587f83153b560d8c7"), "cid" : "100", "name" : "akshay", "address" : "kakkodi", "city" : "calicut", "age" : "53", "ph_no" : "9895000111" }
+{ "_id" : ObjectId("648179e587f83153b560d8c8"), "cid" : "101", "name" : "vishnu", "address" : "kattippara", "city" : "calicut", "age" : "21", "ph_no" : "9947000111" }
+{ "_id" : ObjectId("648179e587f83153b560d8c9"), "Cid" : "102", "name" : "sreya", "address" : "perumbilav", "city" : "thrissur", "age" : "21", "ph_no" : "9034000111" }
+{ "_id" : ObjectId("648179e587f83153b560d8ca"), "cid" : "103", "name" : "minhaj", "address" : "manjeri", "city" : "malappuram", "age" : "24", "ph_no" : "7034275288" }
+{ "_id" : ObjectId("648179e587f83153b560d8cb"), "cid" : "104", "name" : "nileena", "address" : "iritty", "city" : "kannur", "age" : "24", "ph_no" : "9995275288" }
+> 
+
+---------------------------------------------------------------------------------------------------------------------------
+3.      Write a MongoDB query to update the city in the collection CUSTOMER.
+
+> db.Customer.update({"city":"calicut"},{$set:{"city":"oolampara"}})
+WriteResult({ "nMatched" : 1, "nUpserted" : 0, "nModified" : 1 })
+
+
+> db.Customer.find()
+{ "_id" : ObjectId("648179e587f83153b560d8c7"), "cid" : "100", "name" : "akshay", "address" : "oolampara", "city" : "calicut", "age" : "53", "ph_no" : "9895000111" }
+{ "_id" : ObjectId("648179e587f83153b560d8c8"), "cid" : "101", "name" : "vishnu", "address" : "kattippara", "city" : "calicut", "age" : "21", "ph_no" : "9947000111" }
+{ "_id" : ObjectId("648179e587f83153b560d8c9"), "Cid" : "102", "name" : "sreya", "address" : "perumbilav", "city" : "thrissur", "age" : "21", "ph_no" : "9034000111" }
+{ "_id" : ObjectId("648179e587f83153b560d8ca"), "cid" : "103", "name" : "minhaj", "address" : "manjeri", "city" : "malappuram", "age" : "24", "ph_no" : "7034275288" }
+{ "_id" : ObjectId("648179e587f83153b560d8cb"), "cid" : "104", "name" : "nileena", "address" : "iritty", "city" : "kannur", "age" : "24", "ph_no" : "9995275288" }
+> 
+--------------------------------------------------------------------------------------------------------------------------
+4.      Write a MongoDB query to delete the first matched document whose city is “Calicut”.
+
+> db.Customer.deleteOne({city:"oolampara"})
+{ "acknowledged" : true, "deletedCount" : 1 }
+
+> db.Customer.find()
+{ "_id" : ObjectId("648179e587f83153b560d8c8"), "cid" : "101", "name" : "vishnu", "address" : "kattippara", "city" : "calicut", "age" : "21", "ph_no" : "9947000111" }
+{ "_id" : ObjectId("648179e587f83153b560d8c9"), "Cid" : "102", "name" : "sreya", "address" : "perumbilav", "city" : "thrissur", "age" : "21", "ph_no" : "9034000111" }
+{ "_id" : ObjectId("648179e587f83153b560d8ca"), "cid" : "103", "name" : "minhaj", "address" : "manjeri", "city" : "malappuram", "age" : "24", "ph_no" : "7034275288" }
+> { "_id" : ObjectId("648179e587f83153b560d8cb"), "cid" : "104", "name" : "nileena", "address" : "iritty", "city" : "kannur", "age" : "24", "ph_no" : "9995275288" }
+
+

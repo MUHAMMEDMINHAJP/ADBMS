@@ -1,0 +1,36 @@
+
+1.      Write a MongoDB query to display the customer documents having city ‘malappuram’,’kannur’.
+
+
+
+>  db.Customer.find({$or:[{"city":"malappuram"},{"city": "kannur"}]})
+
+{ "_id" : ObjectId("648179e587f83153b560d8ca"), "cid" : "103", "name" : "minhaj", "address" : "manjeri", "city" : "malappuram", "age" : "24", "ph_no" : "7034275288" }
+{ "_id" : ObjectId("6482c86dab1a637adda0d272"), "cid" : "104", "name" : "nileena", "address" : "iritty", "city" : "kannur", "age" : "24", "ph_no" : "9995275288" }
+>
+
+---------------------------------------------------------------------------------------------------------------------------
+
+
+
+2.     Write a MongoDB query to display all customer documents who have age >23.
+
+>  db.Customer.find({"age":{$gt:"22"}})
+
+{ "_id" : ObjectId("648179e587f83153b560d8ca"), "cid" : "103", "name" : "minhaj", "address" : "manjeri", "city" : "malappuram", "age" : "24", "ph_no" : "7034275288" }
+{ "_id" : ObjectId("6482c86dab1a637adda0d272"), "cid" : "104", "name" : "nileena", "address" : "iritty", "city" : "kannur", "age" : "24", "ph_no" : "9995275288" }
+> 
+
+---------------------------------------------------------------------------------------------------------------------------
+
+
+3.      Write a MongoDB query to find customer documents who not live in ‘malappuram’.
+
+
+
+>  db.Customer.find({"city":{$ne:"malappuram"}})
+{ "_id" : ObjectId("648179e587f83153b560d8c8"), "cid" : "101", "name" : "vishnu", "address" : "kattippara", "city" : "calicut", "age" : "21", "ph_no" : "9947000111" }
+{ "_id" : ObjectId("648179e587f83153b560d8c9"), "Cid" : "102", "name" : "sreya", "address" : "perumbilav", "city" : "thrissur", "age" : "21", "ph_no" : "9034000111" }
+{ "_id" : ObjectId("6482c86dab1a637adda0d272"), "cid" : "104", "name" : "nileena", "address" : "iritty", "city" : "kannur", "age" : "24", "ph_no" : "9995275288" }
+> 
+
