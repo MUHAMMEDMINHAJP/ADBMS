@@ -1,0 +1,89 @@
+
+1.Write a MongoDB query to create a user “CUSTOMER1” and grant the read role in the INVOICE database.
+----------------------------------------------------------------------------------------
+
+
+> use admin
+switched to db admin
+> db.createUser({user:"Customer1",pwd:"1234",roles:[{role:"read",db:"invoice"}]})
+Successfully added user: {
+	"user" : "Customer1",
+	"roles" : [
+		{
+			"role" : "read",
+			"db" : "invoice"
+		}
+	]
+}
+ mongo -u Customer1 -p
+MongoDB shell version v4.4.14
+Enter password: 
+connecting to: mongodb://127.0.0.1:27017/?compressors=disabled&gssapiServiceName=mongodb
+Implicit session: session { "id" : UUID("335be521-36da-4765-9562-6eb8f6fc4e36") }
+MongoDB server version: 4.4.14
+---
+The server generated these startup warnings when booting: 
+        2023-06-15T15:36:12.592+05:30: Using the XFS filesystem is strongly recommended with the WiredTiger storage engine. See http://dochub.mongodb.org/core/prodnotes-filesystem
+        2023-06-15T15:36:13.645+05:30: Access control is not enabled for the database. Read and write access to data and configuration is unrestricted
+---
+---
+        Enable MongoDB's free cloud-based monitoring service, which will then receive and display
+        metrics about your deployment (disk utilization, CPU, operation statistics, etc).
+
+        The monitoring data will be available on a MongoDB website with a unique URL accessible to you
+        and anyone you share the URL with. MongoDB may use this information to make product
+        improvements and to suggest MongoDB products and deployment options to you.
+
+        To enable free monitoring, run the following command: db.enableFreeMonitoring()
+        To permanently disable this reminder, run the following command: db.disableFreeMonitoring()
+---
+> 
+
+--------------------------------------------------------------------------------------------------------------------------
+
+
+2.Write a MongoDB query to create the backup for the INVOICE database.
+---------------------------------------------------------------------
+
+ksb@ksb-optiplex-3060:~$ mongodump --db invoice
+
+2023-06-15T15:44:12.714+0530	writing invoice.Customer to dump/invoice/Customer.bson
+2023-06-15T15:44:12.799+0530	done dumping invoice.Customer (4 documents)
+2023-06-15T15:44:12.810+0530	writing invoice.Product to dump/invoice/Product.bson
+2023-06-15T15:44:12.812+0530	done dum3.Write a MongoDB query to restore a particular database or a collection.
+
+
+
+
+-----------------------------------------------------------------------------------------------------------------------
+3.Write a MongoDB query to restore a particular database or a collection.
+-------------------------------------------------------------------------
+
+> use invoice
+switched to db invoice
+
+
+> db.dropDatabase()
+{ "dropped" : "invoice", "ok" : 1 }
+
+> show dbs
+admin   0.000GB
+config  0.000GB
+local   0.000GB
+test    0.000GB
+
+ksb@ksb-optiplex-3060:~$ mongorestore --db invoice dump/invoice
+2023-06-15T15:49:11.833+0530	The --db and --collection flags are deprecated for this use-case; please use --nsInclude instead, i.e. with --nsInclude=${DATABASE}.${COLLECTION}
+2023-06-15T15:49:11.833+0530	building a list of collections to restore from dump/invoice dir
+2023-06-15T15:49:11.833+0530	reading metadata for invoice.Customer from dump/invoice/Customer.metadata.json
+2023-06-15T15:49:11.833+0530	reading metadata for invoice.Product from dump/invoice/Product.metadata.json
+2023-06-15T15:49:12.146+0530	restoring invoice.Product from dump/invoice/Product.bson
+2023-06-15T15:49:12.158+0530	finished restoring invoice.Product (5 documents, 0 failures)
+2023-06-15T15:49:12.231+0530	restoring invoice.Customer from dump/invoice/Customer.bson
+2023-06-15T15:49:12.243+0530	finished restoring invoice.Customer (4 documents, 0 failures)
+2023-06-15T15:49:12.244+0530	no indexes to restore for collection invoice.Product
+2023-06-15T15:49:12.244+0530	no indexes to restore for collection invoice.Customer
+2023-06-15T15:49:12.244+0530	9 document(s) restored successfully. 0 document(s) failed to restore.
+ksb@ksb-optiplex-3060:~$ 
+
+
